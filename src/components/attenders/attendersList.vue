@@ -7,14 +7,20 @@
         Lock selection
       </enhanced-checkbox>
     </div>
-    <div class="attender-item-wrapper" v-for="attender in attendersFiltered">
-      <ul class="clickable attender-item" @click="selectAttender(attender, $event)" @click.ctrl="alertAttender(attender)"
-          :class="{'selected': attender.selected, 'locked': selectionLocked}">
-        <li  v-if="name !== 'selected'" v-for="(val, name) in attender">
-          {{name}} - {{val}}
-        </li>
-      </ul>
+    <div class="view-button-wrapper">
+      <button :class="{'pressed':listView}" @click="selectViewMode('list')" class="fas fa-list"></button>
+      <button :class="{'pressed':plateView}" @click="selectViewMode('plate')" class="fas fa-th-large"></button>
     </div>
+    <transition-group name="list-view">
+      <div :class="{'plate-view': plateView}" class="attender-item-wrapper" v-for="attender in attendersFiltered" :key="attender.id">
+        <ul class="clickable attender-item" @click="selectAttender(attender, $event)" @click.ctrl="alertAttender(attender)"
+            :class="{'selected': attender.selected, 'locked': selectionLocked}">
+          <li  v-if="name !== 'selected'" v-for="(val, name) in attender">
+            {{name}} - {{val}}
+          </li>
+        </ul>
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -30,7 +36,9 @@
           return {
             attenders: DATA.ATTENDERS,
             searchName: "",
-            selectionLocked: false
+            selectionLocked: false,
+            listView: true,
+            plateView: false
           }
         },
         computed: {
@@ -66,6 +74,17 @@
               }
               alert("You clicked on attender: " + output);
             }
+          },
+          selectViewMode: function (mode) {
+            switch (mode) {
+              case 'list':
+                this.listView = true;
+                this.plateView = false;
+                break;
+              case 'plate':
+                this.listView = false;
+                this.plateView = true;
+            }
           }
         },
         components: {
@@ -84,9 +103,14 @@
   }
 
   .attender-item-wrapper {
-    width: 250px;
+    width: 100%;
     float: left;
     margin-left: 15px;
+    transition: width 1s;
+  }
+
+  .attender-item-wrapper.plate-view {
+    width: 250px;
   }
 
   .selected {
@@ -103,4 +127,14 @@
     border-left: dimgrey 3px solid;
     padding-left: 13px;
   }
+
+  .view-button-wrapper button{
+    margin: 0;
+    float: left;
+  }
+
+  .view-button-wrapper .pressed {
+    border-style: inset;
+  }
+
 </style>

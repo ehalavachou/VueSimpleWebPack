@@ -25,18 +25,21 @@ export let DATA = (function () {
     ],
     ATTENDERS: [
       {
+        id: 1,
         name: "John Lennon",
         rank: "2",
         rate: "2234",
         selected: false
       },
       {
+        id: 2,
         name: "Roland Diskein",
         rank: "1",
         rate: "19",
         selected: false
       },
       {
+        id: 3,
         name: "Jake Chaimberth",
         rank: "3",
         rate: "1999",
@@ -67,28 +70,32 @@ export let DATA = (function () {
         name: "Post#1",
         content: "Blog post content#1",
         author: "jim@kirk.ru",
-        isEdit: false
+        isEdit: false,
+        isComments: false
       },
       {
         id: "2",
         name: "Post#2",
         content: "Blog post content#2",
         author: "robby@mail.cc",
-        isEdit: false
+        isEdit: false,
+        isComments: false
       },
       {
         id: "3",
         name: "Post#3",
         content: "Blog post content#3",
         author: "spok@trek.ru",
-        isEdit: false
+        isEdit: false,
+        isComments: false
       },
       {
         id: "4",
         name: "Post#4",
         content: "Blog post content#4",
         author: "ted@bordigen.ru",
-        isEdit: false
+        isEdit: false,
+        isComments: false
       },
     ],
     MODERATORS: [
