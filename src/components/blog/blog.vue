@@ -7,15 +7,21 @@
       >
         <h4>
           <transition name="fade" mode="out-in">
-            <input type="text" v-if="post.isEdit" v-model="post.name">
-            <a v-if="!post.isEdit" href="">
-              <h4>{{post.name}}</h4>
-            </a>
+            <editable-element
+              :element="'anchorHeading'"
+              :edit-element="'input'"
+              :is-edit="post.isEdit"
+              v-model="post.name"
+            ></editable-element>
           </transition>
         </h4>
           <transition name="fade" mode="out-in">
-            <textarea rows="5" cols="50" v-if="post.isEdit" v-model="post.content"></textarea>
-            <p v-if="!post.isEdit">{{post.content}}</p>
+            <editable-element
+              :element="'p'"
+              :edit-element="'textarea'"
+              :is-edit="post.isEdit"
+              v-model="post.content"
+            ></editable-element>
           </transition>
         <slot name="author" v-bind:post="post">
           <span v-if="post.author === user.email">
@@ -45,6 +51,7 @@
 
 <script>
     import {DATA} from '../../data/datasource'
+    import editableElement from './elements/editableElement.vue'
     export default {
         data() {
           return {
@@ -63,6 +70,9 @@
           toggleComments: function (post) {
             post.isComments = !post.isComments;
           }
+        },
+        components: {
+          editableElement
         }
     }
 </script>
@@ -110,15 +120,7 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
     opacity: 0;
   }
-  input[type=text] {
-    border: none;
-    border-bottom: 2px solid black;
-    background-color: beige;
-  }
-  textarea {
-    border: black solid 2px;
-    background-color: beige;
-  }
+
   :focus { outline: none; }
   .author-control {
     position: absolute;
